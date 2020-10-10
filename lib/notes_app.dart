@@ -15,16 +15,10 @@ class NotesApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => Notes()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Notes',
         theme: notesTheme,
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Notes'),
-          ),
-          body: Center(
-            child: Text('Notes'),
-          ),
-        ),
+        home: NotesMainScreen(),
         routes: {
           NotesMainScreen.routeName: (ctx) => NotesMainScreen(),
           EditNoteScreen.routeName: (ctx) => EditNoteScreen(),
