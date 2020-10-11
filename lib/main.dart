@@ -6,8 +6,8 @@ import 'package:notes/widgets/notes_init_helper.dart';
 import 'notes_app.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await DotEnv().load('.env');
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(InitApp());
 }
 

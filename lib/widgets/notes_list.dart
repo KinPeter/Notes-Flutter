@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/providers/connection.dart';
 import 'package:notes/providers/notes.dart';
 import 'package:notes/widgets/note_card_wrapper.dart';
 import 'package:notes/widgets/nothing_here.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 class NotesList extends StatelessWidget {
   Future<void> _refreshNotes(BuildContext context) async {
     await Provider.of<Notes>(context, listen: false).initNotes();
+    await Provider.of<Connection>(context, listen: false).checkConnection();
   }
 
   @override

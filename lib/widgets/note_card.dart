@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/providers/auth.dart';
+import 'package:notes/providers/connection.dart';
 import 'package:notes/providers/notes.dart';
 import 'package:notes/screens/edit_note.dart';
 import 'package:notes/widgets/link_button.dart';
@@ -16,13 +17,13 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
     final auth = Provider.of<Auth>(context);
+    final connection = Provider.of<Connection>(context);
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 4.0),
       child: Card(
         elevation: 4,
-
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -39,13 +40,18 @@ class NoteCard extends StatelessWidget {
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                       color:
-                      note.archived ? Colors.grey.shade400 : Colors.black),
+                          note.archived ? Colors.grey.shade400 : Colors.black),
                 ),
-              if (note.text.length > 1) SizedBox(height: 8.0,),
+              if (note.text.length > 1)
+                SizedBox(
+                  height: 8.0,
+                ),
               if (note.links != null && note.links.length > 0)
                 ...note.links.map((e) => LinkButton(e, note.archived)).toList(),
-              if (note.links != null && note.links.length > 0) SizedBox(
-                height: 8.0,),
+              if (note.links != null && note.links.length > 0)
+                SizedBox(
+                  height: 8.0,
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -56,19 +62,19 @@ class NoteCard extends StatelessWidget {
                             ? Colors.grey.shade400
                             : Colors.grey.shade600),
                   ),
-                  if (auth.isAuth) InkWell(
-                      child: Icon(
-                        Icons.edit,
-                        color: note.archived
-                            ? Colors.grey.shade400
-                            : Theme
-                            .of(context)
-                            .primaryColor,
-                      ),
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                            EditNoteScreen.routeName, arguments: note.id);
-                      }),
+                  if (auth.isAuth && connection.isConnected)
+                    InkWell(
+                        child: Icon(
+                          Icons.edit,
+                          color: note.archived
+                              ? Colors.grey.shade400
+                              : Theme.of(context).primaryColor,
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              EditNoteScreen.routeName,
+                              arguments: note.id);
+                        }),
                 ],
               ),
             ],

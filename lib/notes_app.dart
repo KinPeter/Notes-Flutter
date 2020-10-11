@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes/material_theme.dart';
 import 'package:notes/providers/auth.dart';
+import 'package:notes/providers/connection.dart';
 import 'package:notes/providers/notes.dart';
 import 'package:notes/screens/edit_note.dart';
 import 'package:notes/screens/login.dart';
@@ -12,6 +13,7 @@ class NotesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (ctx) => Connection()),
         ChangeNotifierProvider(create: (ctx) => Auth()),
         ChangeNotifierProvider(create: (ctx) => Notes()),
       ],

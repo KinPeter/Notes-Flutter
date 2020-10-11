@@ -32,7 +32,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Log in'),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+              Navigator.of(context).pushNamed(LoginScreen.routeName);
             },
           ),
           if (auth.isAuth) ListTile(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/providers/auth.dart';
+import 'package:notes/providers/connection.dart';
 import 'package:notes/providers/notes.dart';
 import 'package:notes/widgets/note_card.dart';
 import 'package:provider/provider.dart';
@@ -20,13 +21,14 @@ class NoteCardWrapper extends StatelessWidget {
           content: Text('Do you want to delete this note?'),
           actions: [
             FlatButton(
-              child: Text('No'),
+              child: Text('NO'),
               onPressed: () {
                 Navigator.of(ctx).pop(false);
               },
             ),
             FlatButton(
-              child: Text('Yes'),
+              textColor: Theme.of(context).errorColor,
+              child: Text('YES'),
               onPressed: () {
                 Navigator.of(ctx).pop(true);
               },
@@ -51,8 +53,9 @@ class NoteCardWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
     final auth = Provider.of<Auth>(context);
+    final connection = Provider.of<Connection>(context);
 
-    return auth.isAuth
+    return auth.isAuth && connection.isConnected
         ? Dismissible(
             key: ValueKey(note.id),
             direction: DismissDirection.horizontal,

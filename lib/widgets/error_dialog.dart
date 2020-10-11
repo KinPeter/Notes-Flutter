@@ -13,6 +13,7 @@ class ErrorDialog extends StatelessWidget {
       content: Text(message),
       actions: [
         FlatButton(
+          color: Theme.of(context).accentColor,
           child: Text('OK'),
           onPressed: () {
             Navigator.of(ctx).pop();
