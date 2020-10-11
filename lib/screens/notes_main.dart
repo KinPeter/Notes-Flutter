@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notes/providers/notes.dart';
+import 'package:notes/screens/edit_note.dart';
+import 'package:notes/widgets/app_drawer.dart';
+import 'package:notes/widgets/error_dialog.dart';
+import 'package:notes/widgets/notes_list.dart';
 import 'package:provider/provider.dart';
 
 class NotesMainScreen extends StatefulWidget {
@@ -10,21 +14,48 @@ class NotesMainScreen extends StatefulWidget {
 }
 
 class _NotesMainScreenState extends State<NotesMainScreen> {
+  bool _isLoading = true;
+
+  void _setLoading(bool value) {
+    setState(() {
+      _isLoading = value;
+    });
+  }
+
+  void _onError(e) {
+    showDialog(
+      context: context,
+      builder: (ctx) => ErrorDialog(ctx, 'Could not load your notes.'),
+    );
+  }
+
   @override
   void initState() {
-    Provider.of<Notes>(context, listen: false).initNotes();
+    _setLoading(true);
+    Provider.of<Notes>(context, listen: false)
+        .initNotes()
+        .then((_) {})
+        .catchError(_onError)
+        .whenComplete(() => _setLoading(false));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Notes'),
-      ),
-      body: Center(
-        child: Text('Notes'),
-      ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          title: Text('Notes'),
+          actions: [
+            IconButton(icon: Icon(Icons.add), onPressed: () {
+              Navigator.of(context).pushNamed(EditNoteScreen.routeName);
+            }),
+          ],
+        ),
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : NotesList(),
+        drawer: AppDrawer(),
     );
   }
 }

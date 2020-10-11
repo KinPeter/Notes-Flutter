@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/material_theme.dart';
 
 class NotesInitHelper extends StatelessWidget {
   final String message;
@@ -8,6 +9,7 @@ class NotesInitHelper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: notesTheme,
       home: Scaffold(
         appBar: AppBar(
           title: Text('Notes'),
