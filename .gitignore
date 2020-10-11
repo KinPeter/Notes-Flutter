@@ -40,6 +40,9 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+# DotEnv
+.env*
+
 # Google firebase config
 # GET from firebase console -> Project settings -> Your apps
 android/app/google-services.json

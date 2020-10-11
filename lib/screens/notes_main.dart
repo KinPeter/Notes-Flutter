@@ -12,7 +12,7 @@ class NotesMainScreen extends StatefulWidget {
 class _NotesMainScreenState extends State<NotesMainScreen> {
   @override
   void initState() {
-    Provider.of<Notes>(context, listen: false).fetchNotes();
+    Provider.of<Notes>(context, listen: false).initNotes();
     super.initState();
   }
 
