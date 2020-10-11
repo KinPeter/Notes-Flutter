@@ -45,6 +45,50 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addNote(Note note) async {
+    try {
+      await _fs.add(note.toMap());
+      await _fetchNotes();
+    } catch (e, s) {
+      print(e);
+      print(s);
+      rethrow;
+    }
+  }
+
+  Future<void> addOfflineNote(Note note) async {
+    throw Exception('Not implemented');
+  }
+
+  Future<void> archiveNote(String id) async {
+    Note note = _notes.firstWhere((note) => note.id == id);
+    if (note != null) return;
+    note.archived = !note.archived;
+    await updateNote(note);
+  }
+
+  Future<void> updateNote(Note note) async {
+    try {
+      await _fs.doc(note.id).update(note.toMap());
+      await _fetchNotes();
+    } catch (e, s) {
+      print(e);
+      print(s);
+      rethrow;
+    }
+  }
+
+  Future<void> deleteNote(String id) async {
+    try {
+      await _fs.doc(id).delete();
+      await _fetchNotes();
+    } catch (e, s) {
+      print(e);
+      print(s);
+      rethrow;
+    }
+  }
+
   Future<void> _fetchNotes() async {
     try {
       QuerySnapshot querySnapshot = await _fs.get();
@@ -59,6 +103,7 @@ class Notes with ChangeNotifier {
     } catch (e, s) {
       print(e);
       print(s);
+      rethrow;
     }
   }
 

@@ -45,4 +45,15 @@ class Note {
       'links': links == null ? null : links.map((e) => e.toJSON()).toList(),
     });
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'added': Timestamp.fromDate(DateTime.now()),
+      'archived': archived,
+      'text': text,
+      'links': links != null
+          ? links.map((l) => {'name': l.name, 'url': l.url}).toList()
+          : null
+    };
+  }
 }

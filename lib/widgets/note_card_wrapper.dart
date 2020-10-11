@@ -3,6 +3,7 @@ import 'package:notes/models/note.dart';
 import 'package:notes/providers/auth.dart';
 import 'package:notes/providers/connection.dart';
 import 'package:notes/providers/notes.dart';
+import 'package:notes/widgets/error_dialog.dart';
 import 'package:notes/widgets/note_card.dart';
 import 'package:provider/provider.dart';
 
@@ -41,11 +42,24 @@ class NoteCardWrapper extends StatelessWidget {
     return Future.value(true);
   }
 
-  void onDismissed(DismissDirection direction, BuildContext context) {
-    if (direction == DismissDirection.endToStart) {
-      // Provider.of<Notes>(context, listen: false).deleteNote(note.id);
-    } else {
-      // Provider.of<Notes>(context, listen: false).archiveNote(note.id);
+  Future<void> onDismissed(
+      DismissDirection direction, BuildContext context) async {
+    final isDelete = direction == DismissDirection.endToStart;
+    try {
+      if (isDelete) {
+        Provider.of<Notes>(context, listen: false).deleteNote(note.id);
+      } else {
+        Provider.of<Notes>(context, listen: false).archiveNote(note.id);
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (ctx) => ErrorDialog(
+            ctx,
+            isDelete
+                ? 'Unable to delete note.'
+                : 'Unable to change archived status.'),
+      );
     }
   }
 
