@@ -6,6 +6,7 @@ import 'package:notes/screens/edit_note.dart';
 import 'package:notes/widgets/app_drawer.dart';
 import 'package:notes/widgets/error_dialog.dart';
 import 'package:notes/widgets/notes_list.dart';
+import 'package:notes/widgets/search_box.dart';
 import 'package:provider/provider.dart';
 
 class NotesMainScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class NotesMainScreen extends StatefulWidget {
 
 class _NotesMainScreenState extends State<NotesMainScreen> {
   bool _isLoading = true;
+  bool _isSearching = false;
 
   void _setLoading(bool value) {
     setState(() {
@@ -44,14 +46,26 @@ class _NotesMainScreenState extends State<NotesMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final notes = Provider.of<Notes>(context);
     final connection = Provider.of<Connection>(context);
     final auth = Provider.of<Auth>(context);
 
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text('Notes'),
+          title: _isSearching ? SearchBox() : Text('Notes'),
           actions: [
+            IconButton(
+                icon: Icon(_isSearching ? Icons.close : Icons.search),
+                onPressed: () {
+                  if (_isSearching) {
+                    notes.resetFiltered();
+                  }
+                  setState(() {
+                    _isSearching = !_isSearching;
+                  });
+                }
+            ),
             if (!connection.isConnected) Icon(Icons.wifi_off),
             if (auth.isAuth)
               IconButton(

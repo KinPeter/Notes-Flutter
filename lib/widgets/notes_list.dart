@@ -19,7 +19,7 @@ class NotesList extends StatelessWidget {
       onRefresh: () => _refreshNotes(context),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: provider.notes.length > 0
+        child: provider.notes != null && provider.notes.length > 0
             ? ListView.builder(
                 itemCount: provider.notes.length,
                 itemBuilder: (ctx, i) => NoteCardWrapper(provider.notes[i]),

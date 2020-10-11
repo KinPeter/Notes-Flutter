@@ -12,9 +12,10 @@ class Notes with ChangeNotifier {
   CollectionReference _fs = FirebaseFirestore.instance.collection('notes');
 
   List<Note> _notes;
+  List<Note> _filteredNotes;
 
   List<Note> get notes {
-    return _notes.isEmpty ? null : [..._notes];
+    return _filteredNotes.isEmpty ? null : [..._filteredNotes];
   }
 
   Future<void> initNotes() async {
@@ -25,6 +26,25 @@ class Notes with ChangeNotifier {
     }
   }
 
+  void searchNotes(String value) {
+    _filteredNotes = _notes.where((note) {
+      if (note.text.toLowerCase().contains(value.toLowerCase())) {
+        return true;
+      } else if (note.links != null &&
+          note.links.any((link) =>
+              link.name.toLowerCase().contains(value.toLowerCase()))) {
+        return true;
+      }
+      return false;
+    }).toList();
+    notifyListeners();
+  }
+
+  void resetFiltered() {
+    _filteredNotes = [..._notes];
+    notifyListeners();
+  }
+
   Future<void> _fetchNotes() async {
     try {
       QuerySnapshot querySnapshot = await _fs.get();
@@ -32,6 +52,7 @@ class Notes with ChangeNotifier {
           .map((doc) => Note.fromDocumentSnapshot(doc))
           .toList();
       _notes = _reorderNotes(fetchedNotes);
+      _filteredNotes = [..._notes];
       await _storeNotesLocally();
       print('[+] Notes fetched from Firebase, stored locally.');
       notifyListeners();
@@ -43,9 +64,7 @@ class Notes with ChangeNotifier {
 
   Future<void> _storeNotesLocally() async {
     final prefs = await SharedPreferences.getInstance();
-    final serialized = json.encode(
-      _notes.map((e) => e.toJSON()).toList()
-    );
+    final serialized = json.encode(_notes.map((e) => e.toJSON()).toList());
     prefs.setString(storageKey, serialized);
   }
 
@@ -54,6 +73,7 @@ class Notes with ChangeNotifier {
     if (!prefs.containsKey(storageKey)) return;
     final jsonList = json.decode(prefs.getString(storageKey)) as List<dynamic>;
     _notes = jsonList.map((e) => Note.fromJSON(e)).toList();
+    _filteredNotes = [..._notes];
     print('[+] No internet connection, notes fetched from device storage.');
     notifyListeners();
   }

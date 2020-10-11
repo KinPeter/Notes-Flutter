@@ -17,8 +17,8 @@ class AppDrawer extends StatelessWidget {
             title: Text('Menu'),
             automaticallyImplyLeading: false,
           ),
-          Divider(),
-          ListTile(
+          if (auth.isAuth) Divider(),
+          if (auth.isAuth) ListTile(
             leading: Icon(Icons.add),
             title: Text('Add new note'),
             onTap: () {
