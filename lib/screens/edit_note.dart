@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes/providers/snackbar.dart';
+import 'package:notes/screens/notes_main.dart';
 import 'package:notes/util/snackbar.dart';
 import 'package:notes/widgets/add_link_dialog.dart';
 import 'package:notes/widgets/edit_note_link_item.dart';
@@ -54,12 +56,13 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
       if (_noteId == null) {
         // Add new note
         await _notes.addNote(_editedNote);
-        showSimpleSnackBar(context, 'Note added.');
+        Provider.of<SnackBars>(context, listen: false).triggerAdded();
       } else {
         // Update note
         await _notes.updateNote(_editedNote);
-        showSimpleSnackBar(context, 'Note updated.');
+        Provider.of<SnackBars>(context, listen: false).triggerUpdated();
       }
+      Navigator.of(context).pop();
     } catch (e) {
       print(e);
       showDialog(
