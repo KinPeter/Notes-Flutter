@@ -62,7 +62,7 @@ class Notes with ChangeNotifier {
 
   Future<void> archiveNote(String id) async {
     Note note = _notes.firstWhere((note) => note.id == id);
-    if (note != null) return;
+    if (note == null) throw Exception('Note not found!');
     note.archived = !note.archived;
     await updateNote(note);
   }

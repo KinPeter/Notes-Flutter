@@ -14,30 +14,30 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text('Menu'),
+            title: const Text('Menu'),
             automaticallyImplyLeading: false,
           ),
-          if (auth.isAuth) Divider(),
+          if (auth.isAuth) const Divider(),
           if (auth.isAuth) ListTile(
-            leading: Icon(Icons.add),
-            title: Text('Add new note'),
+            leading: const Icon(Icons.add),
+            title: const Text('Add new note'),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(EditNoteScreen.routeName);
             },
           ),
-          Divider(),
+          const Divider(),
           if (!auth.isAuth) ListTile(
-            leading: Icon(Icons.login),
-            title: Text('Log in'),
+            leading: const Icon(Icons.login),
+            title: const Text('Log in'),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(LoginScreen.routeName);
             },
           ),
           if (auth.isAuth) ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Log out'),
+            leading: const Icon(Icons.logout),
+            title: const Text('Log out'),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/');

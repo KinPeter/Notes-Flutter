@@ -3,6 +3,7 @@ import 'package:notes/models/note.dart';
 import 'package:notes/providers/auth.dart';
 import 'package:notes/providers/connection.dart';
 import 'package:notes/providers/notes.dart';
+import 'package:notes/util/snackbar.dart';
 import 'package:notes/widgets/error_dialog.dart';
 import 'package:notes/widgets/note_card.dart';
 import 'package:provider/provider.dart';
@@ -18,18 +19,18 @@ class NoteCardWrapper extends StatelessWidget {
       final Future<bool> result = showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('Are you sure?'),
-          content: Text('Do you want to delete this note?'),
+          title: const Text('Are you sure?'),
+          content: const Text('Do you want to delete this note?'),
           actions: [
             FlatButton(
-              child: Text('NO'),
+              child: const Text('NO'),
               onPressed: () {
                 Navigator.of(ctx).pop(false);
               },
             ),
             FlatButton(
               textColor: Theme.of(context).errorColor,
-              child: Text('YES'),
+              child: const Text('YES'),
               onPressed: () {
                 Navigator.of(ctx).pop(true);
               },
@@ -43,13 +44,16 @@ class NoteCardWrapper extends StatelessWidget {
   }
 
   Future<void> onDismissed(
-      DismissDirection direction, BuildContext context) async {
+      DismissDirection direction, BuildContext context, Note note) async {
     final isDelete = direction == DismissDirection.endToStart;
     try {
       if (isDelete) {
-        Provider.of<Notes>(context, listen: false).deleteNote(note.id);
+        await Provider.of<Notes>(context, listen: false).deleteNote(note.id);
+        showSimpleSnackBar(context, 'Note deleted.');
       } else {
-        Provider.of<Notes>(context, listen: false).archiveNote(note.id);
+        await Provider.of<Notes>(context, listen: false).archiveNote(note.id);
+        showSimpleSnackBar(context,
+            note.archived ? 'Note archived.' : 'Note set back to active.');
       }
     } catch (e) {
       showDialog(
@@ -74,7 +78,7 @@ class NoteCardWrapper extends StatelessWidget {
             key: ValueKey(note.id),
             direction: DismissDirection.horizontal,
             confirmDismiss: (direction) => confirmDismiss(direction, context),
-            onDismissed: (direction) => onDismissed(direction, context),
+            onDismissed: (direction) => onDismissed(direction, context, note),
             background: Container(
               // To right
               margin:

@@ -36,6 +36,22 @@ class Note {
         : null;
   }
 
+  Note.getInitial() {
+    text = '';
+    links = [];
+    archived = false;
+  }
+
+  Note.clone(Note note) {
+    id = note.id;
+    added = DateTime.parse(note.added.toIso8601String());
+    archived = note.archived;
+    text = note.text;
+    links = note.links == null
+        ? null
+        : note.links.map((e) => Link(e.name, e.url)).toList();
+  }
+
   String toJSON() {
     return json.encode({
       'id': id,

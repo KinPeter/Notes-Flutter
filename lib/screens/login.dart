@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text('Log in'),
+        title: const Text('Log in'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
@@ -100,14 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (isValid) _login();
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 24.0,
                   ),
                   if (_isLoading)
                     CircularProgressIndicator()
                   else
                     RaisedButton(
-                      child: Text('LOG IN'),
+                      child: const Text('LOG IN'),
                       onPressed: _login,
                       padding:
                           EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
