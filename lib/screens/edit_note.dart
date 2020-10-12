@@ -119,8 +119,12 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         title: Text(_noteId != null ? 'Edit Note' : 'Add New Note'),
         actions: [
           if (_isLoading)
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            Container(
+              width: 56,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
             )
           else
             IconButton(
