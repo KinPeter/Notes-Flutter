@@ -19,17 +19,13 @@ class AddLinkDialog extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              decoration: const InputDecoration(
-                labelText: 'Name'
-              ),
+              decoration: const InputDecoration(labelText: 'Name'),
               controller: _nameController,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
             ),
             TextField(
-              decoration: const InputDecoration(
-                  labelText: 'URL'
-              ),
+              decoration: const InputDecoration(labelText: 'URL'),
               controller: _urlController,
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.url,
@@ -49,10 +45,8 @@ class AddLinkDialog extends StatelessWidget {
           textColor: Theme.of(context).accentColor,
           child: Text('Add'),
           onPressed: () {
-            Navigator.of(ctx).pop(Link(
-              _nameController.text,
-              _urlController.text
-            ));
+            Navigator.of(ctx)
+                .pop(Link(_nameController.text, _urlController.text));
           },
         ),
       ],

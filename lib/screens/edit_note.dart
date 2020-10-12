@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:notes/providers/snackbar.dart';
-import 'package:notes/screens/notes_main.dart';
-import 'package:notes/util/snackbar.dart';
 import 'package:notes/widgets/add_link_dialog.dart';
 import 'package:notes/widgets/edit_note_link_item.dart';
 import 'package:provider/provider.dart';
@@ -129,7 +127,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
           else
             IconButton(
               icon: Icon(Icons.save),
-              onPressed: _onSave,
+              onPressed: _editedNote.text.length > 0 ? _onSave : () {},
             )
         ],
       ),
@@ -158,7 +156,9 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                     return null;
                   },
                   onChanged: (value) {
-                    _editedNote.text = value;
+                    setState(() {
+                      _editedNote.text = value;
+                    });
                   },
                   onSaved: (value) {
                     _editedNote.text = value;

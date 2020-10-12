@@ -56,10 +56,6 @@ class Notes with ChangeNotifier {
     }
   }
 
-  Future<void> addOfflineNote(Note note) async {
-    throw Exception('Not implemented');
-  }
-
   Future<void> archiveNote(String id) async {
     Note note = _notes.firstWhere((note) => note.id == id);
     if (note == null) throw Exception('Note not found!');

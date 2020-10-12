@@ -28,8 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       showDialog(
           context: context,
-          builder: (ctx) => ErrorDialog(ctx, 'Login failed.')
-      );
+          builder: (ctx) => ErrorDialog(ctx, 'Login failed.'));
     } finally {
       setState(() {
         _isLoading = false;

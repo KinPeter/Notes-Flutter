@@ -43,13 +43,13 @@ class NoteCard extends StatelessWidget {
                           note.archived ? Colors.grey.shade400 : Colors.black),
                 ),
               if (note.text.length > 1)
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
               if (note.links != null && note.links.length > 0)
                 ...note.links.map((e) => LinkButton(e, note.archived)).toList(),
               if (note.links != null && note.links.length > 0)
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
               Row(

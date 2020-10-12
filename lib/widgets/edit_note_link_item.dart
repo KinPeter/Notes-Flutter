@@ -12,28 +12,24 @@ class EditNoteLinkItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Row(
           children: [
-            Row(
-              children: [
-                const Icon(Icons.link),
-                const SizedBox(width: 4),
-                Text(
-                  _link.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+            const Icon(Icons.link),
+            const SizedBox(width: 4),
+            Text(
+              _link.name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            InkWell(
-                child: Icon(
-                  Icons.close,
-                  color: Theme.of(context).errorColor,
-                ),
-                onTap: () => _deleteLinkFn(_index)
-            )
-          ]
-      ),
+          ],
+        ),
+        InkWell(
+            child: Icon(
+              Icons.close,
+              color: Theme.of(context).errorColor,
+            ),
+            onTap: () => _deleteLinkFn(_index))
+      ]),
     );
   }
 }

@@ -9,12 +9,12 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Ooops!'),
+      title: const Text('Ooops!'),
       content: Text(message),
       actions: [
         FlatButton(
           color: Theme.of(context).accentColor,
-          child: Text('OK'),
+          child: const Text('OK'),
           onPressed: () {
             Navigator.of(ctx).pop();
           },

@@ -12,7 +12,7 @@ class NothingHere extends StatelessWidget {
             color: Colors.grey.shade600,
             size: 32,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Text(

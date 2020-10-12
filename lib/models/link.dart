@@ -13,9 +13,6 @@ class Link {
   }
 
   String toJSON() {
-    return json.encode({
-      'name': name,
-      'url': url
-    });
+    return json.encode({'name': name, 'url': url});
   }
 }

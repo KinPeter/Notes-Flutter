@@ -9,6 +9,7 @@ class SnackBars with ChangeNotifier {
   bool get showAdded {
     return _showAdded;
   }
+
   bool get showUpdated {
     return _showUpdated;
   }
@@ -21,6 +22,7 @@ class SnackBars with ChangeNotifier {
       notifyListeners();
     });
   }
+
   void triggerUpdated() {
     _showUpdated = true;
     notifyListeners();

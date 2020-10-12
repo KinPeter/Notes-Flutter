@@ -64,10 +64,13 @@ class _NotesMainScreenState extends State<NotesMainScreen> {
                   setState(() {
                     _isSearching = !_isSearching;
                   });
-                }
-            ),
-            if (!connection.isConnected) Icon(Icons.wifi_off),
-            if (auth.isAuth)
+                }),
+            if (!connection.isConnected)
+              IconButton(
+                icon: Icon(Icons.wifi_off),
+                onPressed: () {},
+              ),
+            if (connection.isConnected && auth.isAuth)
               IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () {
@@ -79,13 +82,14 @@ class _NotesMainScreenState extends State<NotesMainScreen> {
             ? Center(child: CircularProgressIndicator())
             : NotesList(),
         drawer: AppDrawer(),
-        floatingActionButton: !auth.isAuth || _isLoading
-            ? Container()
-            : FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(EditNoteScreen.routeName);
-                },
-              ));
+        floatingActionButton:
+            !auth.isAuth || _isLoading || !connection.isConnected
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(EditNoteScreen.routeName);
+                    },
+                  ));
   }
 }

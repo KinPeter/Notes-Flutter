@@ -12,7 +12,7 @@ class NotesInitHelper extends StatelessWidget {
       theme: notesTheme,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Notes'),
+          title: const Text('Notes'),
         ),
         body: Center(
           child: Text(message),

@@ -21,17 +21,18 @@ class LinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
         onPressed: openLink,
-        textColor: archived ? Colors.grey.shade400 : Theme.of(context).accentColor,
-        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
+        textColor:
+            archived ? Colors.grey.shade400 : Theme.of(context).accentColor,
+        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
         height: 12.0,
-        visualDensity: VisualDensity(
-            vertical: VisualDensity.minimumDensity),
+        visualDensity:
+            const VisualDensity(vertical: VisualDensity.minimumDensity),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.link),
-            SizedBox(
+            const Icon(Icons.link),
+            const SizedBox(
               width: 4.0,
             ),
             Text(

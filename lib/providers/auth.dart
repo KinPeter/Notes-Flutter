@@ -14,7 +14,6 @@ class Auth with ChangeNotifier {
 
   Future<void> logIn(String email, String password) async {
     try {
-      print(email + ' ' + password);
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       print('Logged in: ' + userCredential.toString());

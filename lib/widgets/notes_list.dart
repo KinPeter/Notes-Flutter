@@ -21,12 +21,10 @@ class NotesList extends StatelessWidget {
     final snackBars = Provider.of<SnackBars>(context);
 
     if (snackBars.showAdded) {
-      Timer(Duration.zero,
-          () => showSimpleSnackBar(context, 'Note added.'));
+      Timer(Duration.zero, () => showSimpleSnackBar(context, 'Note added.'));
     }
     if (snackBars.showUpdated) {
-      Timer(Duration.zero,
-          () => showSimpleSnackBar(context, 'Note updated.'));
+      Timer(Duration.zero, () => showSimpleSnackBar(context, 'Note updated.'));
     }
 
     return RefreshIndicator(
